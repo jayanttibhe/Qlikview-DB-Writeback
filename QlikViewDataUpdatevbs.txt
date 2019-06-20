@@ -1,0 +1,104 @@
+'********************************************************************
+' This is a sample processing script in vbscript to save the data 
+' into an Access DB. You could schedule this script. Or even create 
+' your own logic for your particular DB system as required. For 
+' example, you could use SSIS with SQL Server to load the CSV.
+'******************************************************************
+
+On Error Resume Next  
+iError = 0
+
+'Connection String
+'-----------------
+strConn = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=QlikViewDataUpdate.mdb" 
+
+'Connect to DB
+'--------------
+Set myConn = CreateObject("ADODB.Connection")
+myConn.Open strConn 
+If err.number <> 0 Then
+	iError = err.number 
+
+	'Error Trapping. Just use pop-ups here, but should send email if scheduled.
+	sError = "DB connect failed: " & err.number & " : " & err.description
+	msgbox(sError)
+Else
+	Set rsData = CreateObject("ADODB.Recordset")
+
+	'Create file system object
+	'-------------------------
+	Set fso = CreateObject("Scripting.FileSystemObject")  
+
+	'Get list of files in folder
+	'---------------------------
+	Set folder = fso.GetFolder(".")  
+	Set files = folder.Files    
+End if
+
+
+If err.number <> 0 Then
+	iError = err.number 
+
+	'Error Trapping. Just use pop-ups here, but should send email if scheduled.
+	sError = "DB connect failed: " & err.number & " : " & err.description
+	msgbox(sError)
+Else
+	'Loop thru list and update DB with CSV files
+	'-------------------------------------------
+	For each folderIdx In files
+		strFileName = folderIdx.Name
+		strExt = UCase(right(strFileName, 3))
+
+		'Only if we have a CSV file
+		'----------------------------
+		If strExt = "CSV" Then
+			iCount = 0
+			msgbox("Processing " & strFileName )
+
+			'Get username and timestamp from filename
+			'---------------------------------------
+			arrFileName = Split(strFileName, ".")
+			strTimestamp = arrFileName(0)
+			strUserID = arrFileName(1)
+
+			Set objFile = fso.OpenTextFile(strFileName)
+			Do Until objFile.AtEndOfStream	
+				strRecord = objFile.ReadLine
+				arrRecord = Split(strRecord, ",")
+
+				'Skip first row as it is headings
+				'--------------------------------
+				If iCount <> 0 Then
+					'This block of code is specific to the example data being saved
+					'---------------------------------------------------------------
+					strDept = arrRecord(0)
+					strItem = arrRecord(1)
+					strBudget = arrRecord(2)
+					strSQL = "UPDATE BudgetData SET Budget_ThisYear = " & strBudget & ", UpdateUser = '" & strUserID & "', UpdateTimestamp = '" & strTimestamp & "' "
+					strSQL = strSQL & "WHERE Department = '" & strDept & "' AND Item = '" & strItem & "' "
+					set rsData = myConn.Execute(strSQL)
+
+					'Row level error Trapping. Just use pop-ups for the moment. 
+					If err.number <> 0 Then
+						sError = "Failed to update Db for row " & CStr(iCount) & " : " & err.description
+						msgbox(sError)
+					End if
+				End If
+				iCount = iCount + 1
+			Loop
+			'Delete files if all successfully processed
+			'------------------------------------------
+			strPath = folderIdx.Path
+			Set objFile = Nothing
+			If err.number = 0 Then
+				fso.DeleteFile(strPath)
+			End if
+
+		End If
+	Next  
+End If
+
+
+Set rsData = Nothing
+Set myConn = Nothing
+Set fso = Nothing

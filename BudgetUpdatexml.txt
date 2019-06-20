@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<StraightTableBox>
+ <Budget_x0020_Updates>
+  <Department>Finance</Department>
+  <Item>Equipment</Item>
+  <Budget_Proposed>110000</Budget_Proposed>
+ </Budget_x0020_Updates>
+ <Budget_x0020_Updates>
+  <Department>HR</Department>
+  <Item>Rent</Item>
+  <Budget_Proposed>1768</Budget_Proposed>
+ </Budget_x0020_Updates>
+ <Budget_x0020_Updates>
+  <Department>HR</Department>
+  <Item>Staff</Item>
+  <Budget_Proposed>3283</Budget_Proposed>
+ </Budget_x0020_Updates>
+ <Budget_x0020_Updates>
+  <Department>HR</Department>
+  <Item>Stationery</Item>
+  <Budget_Proposed>505</Budget_Proposed>
+ </Budget_x0020_Updates>
+ <Budget_x0020_Updates>
+  <Department>Operations</Department>
+  <Item>Rent</Item>
+  <Budget_Proposed>315797</Budget_Proposed>
+ </Budget_x0020_Updates>
+ <Budget_x0020_Updates>
+  <Department>Operations</Department>
+  <Item>Software</Item>
+  <Budget_Proposed>13158</Budget_Proposed>
+ </Budget_x0020_Updates>
+ <Budget_x0020_Updates>
+  <Department>Operations</Department>
+  <Item>Staff</Item>
+  <Budget_Proposed>171057</Budget_Proposed>
+ </Budget_x0020_Updates>
+ <Budget_x0020_Updates>
+  <Department>Sales</Department>
+  <Item>MotorVehicle</Item>
+  <Budget_Proposed>55000</Budget_Proposed>
+ </Budget_x0020_Updates>
+</StraightTableBox>
