@@ -1,0 +1,17 @@
+Note that these instructions cover setting up a demonstration environment only. To ‘productionize’ the REST API you should use a scalable web environment. Various options are available depending on where you run the API component; ie. Linux or Windows. 
+
+
+This QlikSend DB wtriteback extension works only on the small subset of data. On the larger DB with many columns to update its not working everytime.
+
+This is demo cover setting up a demonstration environment only. To ‘productionize’ the REST API you should use a scalable web environment.
+This needs additional exploration of the various options to setup productionize webservices. In short this cannot be deplyed as is in prod.
+
+As I mentioned earlier and as per our Qlik Admins as well the real-time DB updates are not recommended as Qlikview / Sense are datamodeling /reporting /BI tools and not WorkFlow tools.
+
+This extn demands the Python based REST api with additional python Libraries Flask (Webservice) and CX_Oracle (Library to communicate with Oracle DB). These should be setup on Root Folder of Qlik Server and not on the NAS drive. Not sure how we can deploy components on the Qlik Server itself. Whether we are allowed to do it OR not.
+
+The Extn demands the ODBC connection with R/W access on PROD DB for particular table.
+
+The extn canot be used as is. As per project requirement we may need to modify the JavaScript code. At present we dont have that resourcing capabilty with us.
+
+
